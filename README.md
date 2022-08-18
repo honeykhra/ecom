@@ -60,3 +60,46 @@ storage mechanisms such as localStorage, IndexedDB, WebSQL and FileSystem.
 It is important to note that browsers such as Chrome run multiple
 instances of the rendering engine: one for each tab. Each tab runs in
 a separate process.
+
+# The rendering engine
+
+The responsibility of the rendering engine is well… Rendering, that is display of the requested contents on the browser screen.
+
+By default the rendering engine can display HTML and XML documents and images. It can display other types of data via plug-ins or extension; for example, displaying PDF documents using a PDF viewer plug-in. However, in this chapter we will focus on the main use case: displaying HTML and images that are formatted using CSS.
+
+## Rendering engines
+
+Different browsers use different rendering engines: Internet Explorer uses Trident, Firefox uses Gecko, Safari uses WebKit. Chrome and Opera (from version 15) use Blink, a fork of WebKit.
+
+WebKit is an open source rendering engine which started as an engine for the Linux platform and was modified by Apple to support Mac and Windows. See webkit.org for more details.
+
+## The main flow
+
+The rendering engine will start getting the contents of the requested document from the networking layer. This will usually be done in 8kB chunks.
+
+After that, this is the basic flow of the rendering engine:
+
+### Rendering engine basic flow
+
+Figure : Rendering engine basic flow
+
+The rendering engine will start parsing the HTML document and convert elements to DOM nodes in a tree called the "content tree". The engine will parse the style data, both in external CSS files and in style elements. Styling information together with visual instructions in the HTML will be used to create another tree: the render tree.
+
+The render tree contains rectangles with visual attributes like color and dimensions. The rectangles are in the right order to be displayed on the screen.
+
+After the construction of the render tree it goes through a "layout" process. This means giving each node the exact coordinates where it should appear on the screen. The next stage is painting - the render tree will be traversed and each node will be painted using the UI backend layer.
+
+It's important to understand that this is a gradual process. For better user experience, the rendering engine will try to display contents on the screen as soon as possible. It will not wait until all HTML is parsed before starting to build and layout the render tree. Parts of the content will be parsed and displayed, while the process continues with the rest of the contents that keeps coming from the network.
+
+## Main flow examples
+
+### WebKit main flow.
+
+Figure : WebKit main flow
+
+Mozilla's Gecko rendering engine main flow.
+Figure : Mozilla's Gecko rendering engine main flow
+
+From figures 3 and 4 you can see that although WebKit and Gecko use slightly different terminology, the flow is basically the same.
+
+Gecko calls the tree of visually formatted elements a "Frame tree". Each element is a frame. WebKit uses the term "Render Tree" and it consists of "Render Objects". WebKit uses the term "layout" for the placing of elements, while Gecko calls it "Reflow". "Attachment" is WebKit's term for connecting DOM nodes and visual information to create the render tree. A minor non-semantic difference is that Gecko has an extra layer between the HTML and the DOM tree. It is called the "content sink" and is a factory for making DOM elements. We will talk about each part of the flow:
