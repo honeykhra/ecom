@@ -1,3 +1,5 @@
+#Web Browser
+
 A web browser takes you anywhere on the internet.
 It retrieves information from other parts of the web and displays it on your
 desktop or mobile device. The information is transferred using the
@@ -24,9 +26,9 @@ for data, the web address tells the browser where to look for each item that
 is described in the html, which then tells the browser where it goes on the
 web page.
 
-The browser's high level structure #
+#The browser's high level structure
 
-The browser's main components are:
+##The browser's main components are:
 
 1.The user interface: this includes the address bar, back/forward button,
 bookmarking menu, etc. Every part of the browser display except the window
@@ -51,7 +53,7 @@ Underneath it uses operating system user interface methods.
 save all sorts of data locally, such as cookies. Browsers also support
 storage mechanisms such as localStorage, IndexedDB, WebSQL and FileSystem.
 
-Browser components
+##Browser components
 
 ![Browser components](https://i.ibb.co/47jVHx2/browse.jpg)
 
